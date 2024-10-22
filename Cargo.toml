@@ -1,0 +1,11 @@
+[package]
+name = "haystack"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+envy = "0.4.2"
+rand = "0.8.5"
+redis = "0.27.5"
+rocket = "0.5.1"
+serde = "1.0.210"
