@@ -54,9 +54,14 @@ fn fetch_from_valkey(id: String) -> redis::RedisResult<String> {
 }
 
 #[get("/<id>")]
-async fn retrieve(id: PasteId<'_>) -> String { // Changed return type to String
-    let retval: String = fetch_from_valkey(id.to_string()).unwrap();
-    retval
+async fn retrieve(id: PasteId<'_>) -> Result<String, std::io::Error> { // Changed return type to Result
+    match fetch_from_valkey(id.to_string()) {
+        Ok(retval) => Ok(retval),
+        Err(e) => {
+            println!("{}", e);
+            Ok("Value not found".to_string())
+        }, // Handle error
+    }
 }
 
 fn load_config() -> Config {
